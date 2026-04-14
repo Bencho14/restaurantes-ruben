@@ -228,6 +228,13 @@ DELETE FROM restaurantes WHERE ID = 1;
 
 
     // filtros
+    @Test
+    void findByRestaurant() {
+
+
+
+        List<Employee> empleados = repository.findByRestaurant_Name("");
+    }
 
 
     // antiguedad en dias
