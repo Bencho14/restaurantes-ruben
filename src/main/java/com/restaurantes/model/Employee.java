@@ -28,6 +28,8 @@ public class Employee {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    private String name;
+
     @Column(unique = true)
     private String nif;
 

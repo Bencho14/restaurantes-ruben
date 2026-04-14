@@ -229,11 +229,47 @@ DELETE FROM restaurantes WHERE ID = 1;
 
     // filtros
     @Test
-    void findByRestaurant() {
+    void findAllBy_ActiveTrue_And_RestaurantName() {
+        //paso 1: crear dos restaurantes y guardarlos
+
+        Restaurant restaurant1 = new Restaurant();
+        restaurant1.setName("Tomy Romas");
+        restaurantRepository.save(restaurant1);
+
+        Restaurant restaurant2 = new Restaurant();
+        restaurant2.setName("Little Italy");
+        restaurantRepository.save(restaurant2);
+
+
+        //paso 2: crear 4 empleados, dos cada restaurante
+
+        Employee empleado11 = new Employee();
+        empleado11.setName("Rubén Pinto");
+        repository.save(empleado11);
+
+        Employee empleado12 = new Employee();
+        empleado12.setName("Alan Sastre");
+        repository.save(empleado12);
+
+        Employee empleado21 = new Employee();
+        empleado21.setName("Paquita Gallego");
+        repository.save(empleado21);
+
+        Employee empleado22 = new Employee();
+        empleado22.setName("Ana de Armas");
+        repository.save(empleado22);
+
+
+        //paso 3: invocar el nuevo metodo findAllBy....
+
+        List<Employee> empleados = repository.findAllBy();
+        assertNotNull(empleados);
+        assertTrue(empleados.equals(22));
+
+        //paso 4: assert
 
 
 
-        List<Employee> empleados = repository.findByRestaurant_Name("");
     }
 
 
