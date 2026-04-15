@@ -26,4 +26,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     // crear sentencias personalizadas
     @Query(value = "select (current_date - e.startDate) from Employee e where e.nif = ?1")
     Duration findWorkDaysByNif(String nif);
+
+  // Tested in EmployeeRepositoryTest.findAllBy_ActiveTrue_And_RestaurantName
+  List<Employee> findAllByActiveTrueAndRestaurantName(String name);
 }

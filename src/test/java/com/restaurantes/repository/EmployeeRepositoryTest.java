@@ -227,49 +227,38 @@ DELETE FROM restaurantes WHERE ID = 1;
     }
 
 
-    // filtros
     @Test
     void findAllBy_ActiveTrue_And_RestaurantName() {
-        //paso 1: crear dos restaurantes y guardarlos
-
+        repository.deleteAll();
+        // paso 1: crear dos restaurantes
         Restaurant restaurant1 = new Restaurant();
-        restaurant1.setName("Tomy Romas");
+        restaurant1.setName("El Buen Sabor");
         restaurantRepository.save(restaurant1);
 
-        Restaurant restaurant2 = new Restaurant();
-        restaurant2.setName("Little Italy");
-        restaurantRepository.save(restaurant2);
+        Restaurant restaurant2 = restaurantRepository.save(Restaurant.builder().name("El Mal Sabor").build());
 
+        // paso 2: crear cuatro empleados, dos cada restaurante
+        Employee empleado1 = new Employee();
+        empleado1.setNif("1");
+        empleado1.setActive(true);
+        empleado1.setRestaurant(restaurant1);
+        repository.save(empleado1);
 
-        //paso 2: crear 4 empleados, dos cada restaurante
+        Employee empleado2 = repository.save(
+                Employee.builder().nif("2").active(true).restaurant(restaurant1).build()
+        );
+        Employee empleado3 = repository.save(
+                Employee.builder().nif("3").active(true).restaurant(restaurant2).build()
+        );
+        Employee empleado4 = repository.save(
+                Employee.builder().nif("4").active(false).restaurant(restaurant2).build()
+        );
 
-        Employee empleado11 = new Employee();
-        empleado11.setName("Rubén Pinto");
-        repository.save(empleado11);
+        // paso 3: invocar el nuevo metodo findAllBy......
+        List<Employee> empleadosActivosDelMalSabor = repository.findAllByActiveTrueAndRestaurantName("El Mal Sabor");
 
-        Employee empleado12 = new Employee();
-        empleado12.setName("Alan Sastre");
-        repository.save(empleado12);
-
-        Employee empleado21 = new Employee();
-        empleado21.setName("Paquita Gallego");
-        repository.save(empleado21);
-
-        Employee empleado22 = new Employee();
-        empleado22.setName("Ana de Armas");
-        repository.save(empleado22);
-
-
-        //paso 3: invocar el nuevo metodo findAllBy....
-
-        List<Employee> empleados = repository.findAllBy();
-        assertNotNull(empleados);
-        assertTrue(empleados.equals(22));
-
-        //paso 4: assert
-
-
-
+        // paso 4: assert
+        assertEquals(1, empleadosActivosDelMalSabor.size());
     }
 
 
