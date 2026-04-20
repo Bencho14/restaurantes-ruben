@@ -12,4 +12,14 @@ public class HelloController {
     public String hola() {
         return "hola";
     }
+
+
+    @getMapping("adios")
+    public String adios(Model model) {
+        model.addAttribute("mensaje", "Adios mundo cruel");
+        model.addAttribute("dinerito", 30.50);
+        return "adios";
+    }
+
+
 }
