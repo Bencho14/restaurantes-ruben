@@ -1,8 +1,7 @@
 package com.restaurantes.repository;
 
 import com.restaurantes.model.Employee;
-import com.restaurantes.model.Restaurant;
-import com.restaurantes.model.WorkLevel;
+import com.restaurantes.model.enums.WorkLevel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,18 +14,22 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
 
+
   List<Employee> findAllByLevel(WorkLevel level);
 
-    List<Employee> findAllByActive(Boolean active);
+  List<Employee> findAllByActive(Boolean active);
 
-    List<Employee> findByRestaurant_Name(String name);
+  List<Employee> findByRestaurant_Name(String name);
 
 
 
-    // crear sentencias personalizadas
-    @Query(value = "select (current_date - e.startDate) from Employee e where e.nif = ?1")
-    Duration findWorkDaysByNif(String nif);
+  // crear sentencias personalizadas
+  @Query(value = "select (current_date - e.startDate) from Employee e where e.nif = ?1")
+  Duration findWorkDaysByNif(String nif);
+
+  List<Employee> findAllByActiveTrue();
 
   // Tested in EmployeeRepositoryTest.findAllBy_ActiveTrue_And_RestaurantName
   List<Employee> findAllByActiveTrueAndRestaurantName(String name);
+
 }

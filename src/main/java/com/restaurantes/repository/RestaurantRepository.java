@@ -10,4 +10,3 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
 
 }
-

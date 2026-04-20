@@ -1,5 +1,6 @@
 package com.restaurantes.model;
 
+import com.restaurantes.model.enums.WorkLevel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,8 +29,6 @@ public class Employee {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String name;
-
     @Column(unique = true)
     private String nif;
 
@@ -46,8 +45,10 @@ public class Employee {
     // LocalTime
     // LocalDateTime
 
+    // Se guarda en base de datos en una columna restaurant_id
+    // se guarda solo la clave primaria osea el id
     @ToString.Exclude // lombok
-    @ManyToOne() // JPA
+    @ManyToOne // JPA
     private Restaurant restaurant;
 
 }
