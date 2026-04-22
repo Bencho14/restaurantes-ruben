@@ -5,18 +5,22 @@
     <title>Listado Restaurantes</title>
 </head>
 <body>
+<h1 th:text="${saludo}"></h1>
 
-<h1 th:text="$(saludo)"></h1>
+<p th:text="|${#lists.size(restaurants)} resultados|"></p>
 
-<p th:text="|${#Lists.size(restaurants)} resultados |"></p>
-
-<ol>
-    <li th:each="restaurant: ${restaurants}">
+<ul>
+    <li th:each="restaurant : ${restaurants}">
         <span th:text="${restaurant.name}"></span>
         <span th:text="${restaurant.averagePrice}"></span>
+        <!-- Agregar enlace para Ver restaurante -->
+        <a th:href="@{/restaurants/{id}(id=${restaurant.id})}">Ver restaurante</a>
 
     </li>
-</ol>
+</ul>
+
+
+
 
 
 

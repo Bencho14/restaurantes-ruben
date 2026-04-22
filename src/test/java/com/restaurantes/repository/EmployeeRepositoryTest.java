@@ -118,7 +118,7 @@ class EmployeeRepositoryTest {
 
 
 
-    // comprobar que sí existe el empleado 1: existById
+        // comprobar que sí existe el empleado 1: existById
         assertTrue(repository.existsById(1L));
         long numeroEmpleadosAntes = repository.count();
 
@@ -225,6 +225,34 @@ DELETE FROM restaurantes WHERE ID = 1;
     }
 
 
+    // filtros basico
+    // filtrar empleados por nivel JUNIOR
+    @Test
+    void findByLevel() {
+
+        repository.deleteAll();
+        repository.save(Employee.builder().nif("1").level(WorkLevel.JUNIOR).build());
+        repository.save(Employee.builder().nif("2").level(WorkLevel.JUNIOR).build());
+        repository.save(Employee.builder().nif("3").level(WorkLevel.SENIOR).build());
+        repository.save(Employee.builder().nif("4").level(WorkLevel.SENIOR).build());
+
+
+        List<Employee> juniors = repository.findAllByLevel(WorkLevel.JUNIOR);
+        assertEquals(2, juniors.size());
+
+        // FILTRO CON JAVa NO SERÍA LO MÁS OPTIMO mejor que filtre la base de datos
+//        for (var empleado : repository.findAll())
+//            if(empleado.getLevel() == WorkLevel.JUNIOR)
+//                System.out.println(empleado);
+//
+//        repository.findAll().stream().filter(e -> e.getLevel() == WorkLevel.JUNIOR).forEach(System.out::println);
+//
+    }
+
+
+    // Filtrar employees active = true y trabajen en DominosPizza
+
+
     @Test
     void findAllBy_ActiveTrue_And_RestaurantName() {
         repository.deleteAll();
@@ -259,7 +287,6 @@ DELETE FROM restaurantes WHERE ID = 1;
         assertEquals(1, empleadosActivosDelMalSabor.size());
     }
 
-
     // antiguedad en dias
     @Test
     void antiguedadEnDiasTest() {
@@ -273,6 +300,7 @@ DELETE FROM restaurantes WHERE ID = 1;
 
         long antiguedadEnDias = ChronoUnit.DAYS.between(empleado.getStartDate(), LocalDate.now());
         System.out.println(antiguedadEnDias);
+
 
     }
 }
