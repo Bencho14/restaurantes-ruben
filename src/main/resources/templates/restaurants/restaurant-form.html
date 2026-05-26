@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/head :: head('Nuevo Restaurante')}">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+<nav th:replace="~{layout/navbar :: navbar}"></nav>
+
+<main class="container flex-grow-1" th:with="isEdition=${restaurant.id != null}">
+    <h1 th:text="${isEdition ? 'Editar restaurante' : 'Crear restaurante'}">Crear Nuevo Restaurante</h1>
+
+    <form th:action="@{/restaurants}" method="post" th:object="${restaurant}">
+
+        <div class="mb-3" th:if="${isEdition}">
+            <label class="form-label" for="id">Identificador</label>
+            <input type="text" class="form-control" id="id" th:field="*{id}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="averagePrice" class="form-label">Precio Promedio</label>
+            <input type="number" step="1" class="form-control" id="averagePrice" th:field="*{averagePrice}" required>
+        </div>
+
+        <!-- boolean active input checkbox-->
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="active" th:field="*{active}">
+            <label class="form-check-label" for="active">Restaurante habilitado activo</label>
+        </div>
+        <!-- string description textarea -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Descripción</label>
+            <textarea id="description" class="form-control" th:field="*{description}" rows="4" maxlength="500"></textarea>
+        </div>
+        <!-- LocalDate fecha input date  -->
+        <div class="mb-3">
+            <label for="date" class="form-label">Fecha apertura</label>
+            <input type="date" class="form-control" id="date" th:field="*{date}" required>
+        </div>
+        <!-- string city select -->
+        <div class="mb-3">
+            <label for="city" class="form-label">Ciudad</label>
+            <select class="form-select" id="city" th:field="*{city}">
+                <option value="">Seleccionar ciudad</option>
+                <option th:value="'Madrid'">Madrid</option>
+                <option th:value="'Barcelona'">Barcelona</option>
+                <option th:value="'Málaga'">Málaga</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="foodType" class="form-label">Tipo de Comida</label>
+            <select class="form-select" id="foodType" th:field="*{foodType}">
+                <option value="">Seleccionar tipo</option>
+                <option
+                        th:each="type : ${T(com.restaurantes.model.enums.FoodType).values()}"
+                        th:value="${type}"
+                        th:text="${type.label}">
+                </option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary" th:text="${isEdition ? 'Actualizar restaurante' : 'Crear restaurante'}">Crear Restaurante</button>
+        <a href="/restaurants" class="btn btn-secondary">Cancelar</a>
+    </form>
+</main>
+
+<footer th:replace="~{layout/footer :: footer}"></footer>
+<script th:replace="~{layout/footer :: scripts}"></script>
+
+</body>
+</html>

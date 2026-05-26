@@ -45,6 +45,7 @@ class DishRepositoryTest {
         assertEquals(2, platos.size());
     }
 
+
     @Test
     void findByPriceLessThanEqual() {
         List<Dish> platos = dishRepository.findByPriceLessThanEqual(10.0);

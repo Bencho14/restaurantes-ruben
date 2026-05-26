@@ -41,7 +41,7 @@ class RestaurantRepositoryTest {
     @Test
     void guardarRestaurante() {
         // INSERT INTO restaurantes
-         Restaurant restaurant = new Restaurant();
+        Restaurant restaurant = new Restaurant();
         // RestaurantRepository repo = new RestaurantRepository(); // No se puede porque es una interface no una class
 
 //        Restaurant restaurant = Restaurant.builder().build();
@@ -200,7 +200,7 @@ class RestaurantRepositoryTest {
         restaurant = restaurantRepository.save(restaurant);
 
         // Que hago aquí ???? para comprobar si existe el restaurante 1 que acabo de crear usando exists
-        assertTrue(restaurantRepository.existsById(1L));
+//        assertTrue(restaurantRepository.existsById(1L));
         assertTrue(restaurantRepository.existsById(restaurant.getId()));
 
         if (restaurantRepository.existsById(1L)) {
